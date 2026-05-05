@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>iMersWamel | WA & Email Funnel Marketing</title>
+  
+  <!-- =========================================================================
+       EXTERNAL ASSETS & FRAMEWORKS
+       iMersWamel menggunakan Tailwind CSS untuk performa desain yang responsif.
+       Optimasi Mobile: Menggunakan utility classes untuk breakpoint sm, md, lg.
+       ========================================================================= -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Premium: Plus Jakarta Sans (Kesan Modern & Eksklusif) -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Ikon Set: Lucide Icons (Bersih dan Ringan) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    /** * =========================================================================
+     * BASE TRANSITION & GLOBAL FONTS (iMersWamel Standard)
+     * Mengatur dasar animasi transparan saat halaman pertama kali dimuat.
+     * Optimasi Mobile: Menghilangkan horizontal scroll dan mengoptimalkan tinggi layar.
+     * =========================================================================
+     */
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh; 
+      min-height: -webkit-fill-available; /* Fix untuk browser mobile Safari */
+      display: flex; 
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center; 
+      padding: 16px; /* Padding lebih kecil di mobile agar konten lebih luas */
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out, background 0.5s ease;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    html {
+      height: -webkit-fill-available;
+    }
+
+    /** * =========================================================================
+     * THEME ENGINE: Kontrol Warna, Kontras, & Atmosfer Visual
+     * Logika ini secara otomatis merubah seluruh mood halaman berdasarkan 
+     * pilihan tema yang disetel pada Dashboard Admin iMersWamel.
+     * =========================================================================
+     */
+    
+    /* 1. THEME: MIDNIGHT (Dark Premium - Default iMersWamel) */
+    .theme-midnight { 
+      background: radial-gradient(circle at top left, #1e1b4b, #0f172a); 
+      color: white; 
+    }
+    .theme-midnight .glass { 
+      background: rgba(255, 255, 255, 0.03); 
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+    }
+    .theme-midnight .input-control { 
+      background: rgba(30, 41, 59, 0.7); 
+      color: white; 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    .theme-midnight h1 { 
+      background: linear-gradient(to bottom, #ffffff, rgba(255,255,255,0.8)); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+    }
+
+    /* 2. THEME: CLEAN (Light Modern - Minimalis & Terang) */
+    .theme-clean { 
+      background: #f8fafc; 
+      color: #0f172a; 
+    }
+    .theme-clean .glass { 
+      background: white; 
+      border: 1px solid #e2e8f0; 
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); 
+    }
+    .theme-clean .input-control { 
+      background: #f1f5f9; 
+      color: #0f172a; 
+      border: 1px solid #cbd5e1; 
+    }
+    .theme-clean h1 { 
+      color: #1e1b4b; 
+      background: none; 
+      -webkit-text-fill-color: initial; 
+    }
+    .theme-clean p { color: #64748b; }
+    .theme-clean label { color: #475569; font-weight: 700; }
+
+    /* 3. THEME: NATURE (Deep Green Earth - Segar & Profesional) */
+    .theme-nature { 
+      background: radial-gradient(circle at top left, #064e3b, #022c22); 
+      color: white; 
+    }
+    .theme-nature .glass { 
+      background: rgba(255, 255, 255, 0.04); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    .theme-nature .input-control { 
+      background: rgba(6, 78, 59, 0.5); 
+      color: white; 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+
+    /** * =========================================================================
+     * LAYOUT ENGINE: Kontrol Struktur Tata Letak (Center vs Split)
+     * Optimasi Mobile: Split layout akan otomatis menjadi tumpukan vertikal (stack).
+     * =========================================================================
+     */
+    #mainWrapper { 
+      width: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: 100%;
+    }
+
+    /* TATA LETAK 1: CENTER (Lurus & Elegan) */
+    .layout-center { 
+      align-items: center; 
+      text-align: center; 
+      justify-content: center;
+    }
+    .layout-center #contentSide { 
+      margin-bottom: 2rem; 
+      width: 100%; 
+      max-width: 650px;
+    }
+    .layout-center .glass { 
+      max-width: 480px; 
+      width: 100%; 
+      margin: 0 auto;
+    }
+
+    /* TATA LETAK 2: SPLIT (Responsif: Mobile=Stack, Desktop=Side-by-Side) */
+    .layout-split { 
+      align-items: center; 
+      gap: 32px; 
+      max-width: 1100px; 
+      width: 100%; 
+      margin: 0 auto; 
+    }
+    @media (min-width: 768px) { 
+      .layout-split { flex-direction: row; justify-content: space-between; text-align: left; gap: 60px; }
+      .layout-split #contentSide { width: 50%; text-align: left; }
+      .layout-split #contentSide img { margin-left: 0; margin-right: auto; }
+      .layout-split #formSide { width: 450px; flex-shrink: 0; }
+      .layout-split #dynamicTagline { margin-left: 0; }
+    }
+
+    /** * =========================================================================
+     * UI COMPONENTS, FORMS & MOBILE OPTIMIZATIONS
+     * =========================================================================
+     */
+    .glass { 
+      backdrop-filter: blur(20px); 
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+      border-radius: 1.5rem; 
+      padding: 2rem; /* Padding lebih ramping di mobile */
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    @media (min-width: 640px) {
+      .glass { padding: 3rem; border-radius: 2rem; }
+    }
+
+    /* Input besar agar mudah diklik jempol di layar HP */
+    .input-control { 
+      width: 100%; 
+      padding: 1rem 1.2rem; 
+      border-radius: 0.85rem; 
+      margin-top: 0.6rem; 
+      outline: none; 
+      transition: all 0.4s ease; 
+      font-size: 16px; /* Menghindari auto-zoom di iPhone */
+      font-weight: 500;
+    }
+    
+    @media (min-width: 640px) {
+      .input-control { padding: 1.2rem 1.5rem; border-radius: 1rem; }
+    }
+
+    .input-control:focus { 
+      border-color: #6366f1; 
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); 
+    }
+
+    /* iMersWamel CTA Button: Sangat tactile untuk mobile */
+    .btn-cta { 
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+      cursor: pointer;
+      font-weight: 800;
+      color: white;
+      letter-spacing: 0.05em;
+      touch-action: manipulation; /* Optimasi respon sentuhan */
+    }
+    
+    .btn-cta:hover { 
+      transform: translateY(-3px); 
+      filter: brightness(1.1);
+    }
+
+    .btn-cta:active {
+      transform: scale(0.96);
+    }
+
+    /* Loader & Splash Overlay */
+    #loader-overlay { 
+      position: fixed; 
+      inset: 0; 
+      background: #0f172a; 
+      display: flex; 
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center; 
+      z-index: 9999; 
+      transition: opacity 0.6s ease; 
+    }
+    
+    /* Animasi Transisi */
+    .animate-in { 
+      animation: fadeInEffect 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+    }
+    @keyframes fadeInEffect { 
+      from { opacity: 0; transform: translateY(30px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    .success-icon-wrap {
+      animation: popInSuccess 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes popInSuccess {
+      from { transform: scale(0.4); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="theme-midnight">
+
+  <!-- =========================================================================
+       LAYER 1: SPLASH LOADING SCREEN (Mobile-Optimized)
+       ========================================================================= -->
+  <div id="loader-overlay">
+    <div class="flex flex-col items-center gap-6 text-center px-6">
+      <div id="loader-spinner" class="w-14 h-14 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <div class="space-y-2">
+        <p id="loader-text" class="text-[11px] font-black text-indigo-400 uppercase tracking-[0.4em] animate-pulse">Menghubungkan iMersWamel...</p>
+        <p class="text-[9px] text-slate-700 font-bold uppercase tracking-widest">Infrastruktur Funnel Pintar</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       LAYER 2: MAIN DYNAMIC CONTAINER
+       ========================================================================= -->
+  <div id="mainWrapper" class="layout-center animate-in">
+    
+    <!-- SUB-LAYER A: BRANDING & HEADLINE AREA -->
+    <div id="contentSide" class="z-20 px-4 md:px-0">
+      <!-- Logo Dinamis -->
+      <div id="logoWrapper" class="hidden mb-6 md:mb-10">
+        <img id="dynamicLogo" src="" alt="iMersWamel Logo" class="h-16 md:h-24 w-auto mx-auto object-contain drop-shadow-2xl">
+      </div>
+      
+      <!-- Headline Aplikasi: Ukuran font adaptif untuk mobile (text-3xl) dan desktop (text-7xl) -->
+      <h1 id="dynamicAppName" class="text-3xl sm:text-4xl md:text-7xl font-black tracking-tighter uppercase tracking-widest leading-tight mb-4 md:mb-6">
+        <!-- Dimuat via JavaScript -->
+      </h1>
+      
+      <!-- Tagline -->
+      <p id="dynamicTagline" class="text-sm sm:text-base md:text-lg font-medium opacity-70 leading-relaxed mx-auto max-w-md md:max-w-lg mb-2">
+        <!-- Dimuat via JavaScript -->
+      </p>
+
+      <!-- Gambar Produk (Hanya Split Layout) -->
+      <div id="productImageWrapper" class="hidden mt-8 md:mt-14 transform transition-all duration-1000 scale-95 opacity-0">
+        <img id="productImage" src="" alt="Showcase" class="w-full rounded-2xl md:rounded-3xl shadow-2xl border border-white/10">
+      </div>
+    </div>
+
+    <!-- SUB-LAYER B: FORM INTERACTION AREA -->
+    <div id="formSide" class="w-full flex justify-center z-20 mt-4 md:mt-0">
+      <main class="glass w-full">
+        
+        <!-- STATE: FORM -->
+        <div id="formWrapper" class="transition-all duration-700">
+          <div class="text-center mb-8 md:mb-12">
+            <h2 class="text-xl md:text-2xl font-extrabold tracking-tight uppercase tracking-[0.2em]">Daftar Sekarang</h2>
+            <div class="w-12 h-1.5 bg-indigo-500 mx-auto mt-4 rounded-full opacity-50 shadow-indigo-500/20"></div>
+          </div>
+
+          <form id="leadForm" onsubmit="handleSubmit(event)" class="space-y-6 md:space-y-9">
+            <input type="hidden" id="campaignInput" name="campaign" value="GENERAL">
+            
+            <!-- Nama -->
+            <div class="group">
+              <label class="text-[10px] md:text-[12px] font-black opacity-60 ml-1 uppercase tracking-widest group-focus-within:text-indigo-400 transition-colors">
+                Nama Lengkap
+              </label>
+              <input type="text" name="nama" required placeholder="Contoh: Budi Santoso" class="input-control">
+            </div>
+
+            <!-- Email -->
+            <div class="group">
+              <label class="text-[10px] md:text-[12px] font-black opacity-60 ml-1 uppercase tracking-widest group-focus-within:text-indigo-400 transition-colors">
+                Email Aktif
+              </label>
+              <input type="email" name="email" required placeholder="budi@email.com" class="input-control">
+            </div>
+
+            <!-- WhatsApp -->
+            <div class="group">
+              <label class="text-[10px] md:text-[12px] font-black opacity-60 ml-1 uppercase tracking-widest group-focus-within:text-indigo-400 transition-colors">
+                Nomor WhatsApp
+              </label>
+              <input type="tel" name="wa" required placeholder="081234567890" class="input-control">
+            </div>
+
+            <!-- Tombol Submit -->
+            <button type="submit" id="submitBtn" class="btn-cta w-full py-5 md:py-6 rounded-xl md:rounded-2xl font-black text-lg md:text-xl mt-4 uppercase tracking-widest active:scale-95">
+              <!-- Teks dinamis -->
+            </button>
+            
+            <!-- Trust Badge -->
+            <div class="flex items-center justify-center gap-3 mt-8 md:mt-10 opacity-30">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <p class="text-[9px] font-black uppercase tracking-widest">Privasi Data Terjamin</p>
+            </div>
+          </form>
+        </div>
+
+        <!-- STATE: SUKSES -->
+        <div id="successState" class="hidden text-center py-10 md:py-16 animate-in px-2">
+          <div class="success-icon-wrap w-20 h-20 md:w-28 md:h-28 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-8 md:mb-12 border border-indigo-500/20">
+            <i data-lucide="party-popper" class="w-10 h-10 md:w-14 md:h-14 text-indigo-400"></i>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter">Berhasil!</h2>
+          <p class="opacity-70 text-sm md:text-base leading-relaxed mb-10 md:mb-14 font-medium">
+            Pendaftaran iMersWamel sukses. Akses Anda sedang dikirimkan secara otomatis via WhatsApp.
+          </p>
+          
+          <div class="inline-flex items-center gap-4 px-8 py-4 bg-white/5 rounded-full border border-white/10">
+            <div class="w-2 h-2 bg-indigo-500 rounded-full animate-ping"></div>
+            <p class="text-[10px] font-black uppercase tracking-[0.2em]">Redirecting...</p>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- LAYER 3: FOOTER -->
+  <footer class="mt-16 md:mt-24 text-center opacity-20 pb-12">
+    <p class="text-[10px] font-bold tracking-[0.4em] uppercase">
+      &copy; 2026 iMersWamel Pro &bull; WA & Email Funnel Expert
+    </p>
+  </footer>
+
+  <!-- =========================================================================
+       CORE JAVASCRIPT ENGINE (v3.9 - Mobile Friendly Sync)
+       ========================================================================= -->
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzXlMjRlKGybOmFvqukScuNr02qKs4VR46m3tIPep6ahuVkdPU0w0dGjhwJQ0YlQHuWew/exec"; 
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const pathCampaign = pathSegments.pop();
+    const campaignId = urlParams.get('campaign') || pathCampaign || "GENERAL";
+    
+    let appSettings = {}; 
+
+    /**
+     * INISIALISASI HALAMAN
+     */
+    async function initPage() {
+      const loader = document.getElementById('loader-overlay');
+      const wrapper = document.getElementById('mainWrapper');
+
+      try {
+        const response = await fetch(`${WEB_APP_URL}?action=getSettings&campaign=${campaignId}`);
+        if (!response.ok) throw new Error("API Offline");
+        
+        appSettings = await response.json();
+
+        // 1. TEMA Visual
+        document.body.className = `theme-${appSettings.theme || 'midnight'}`;
+        if (appSettings.bgType === 'solid' && appSettings.bgValue) {
+          document.body.style.background = appSettings.bgValue;
+        } else if (appSettings.bgType === 'image' && appSettings.bgValue) {
+          document.body.style.backgroundImage = `url('${appSettings.bgValue}')`;
+        }
+
+        // 2. LAYOUT Spasial
+        if (appSettings.layout === 'split') {
+          wrapper.className = "layout-split animate-in";
+          if (appSettings.productImageUrl) {
+            const prodImg = document.getElementById('productImage');
+            prodImg.src = appSettings.productImageUrl;
+            const prodWrap = document.getElementById('productImageWrapper');
+            prodWrap.classList.remove('hidden');
+            setTimeout(() => { 
+              prodWrap.classList.remove('scale-95', 'opacity-0');
+              prodWrap.classList.add('scale-100', 'opacity-100');
+            }, 800);
+          }
+        } else {
+          wrapper.className = "layout-center animate-in";
+        }
+
+        // 3. BRANDING Data
+        document.title = appSettings.appName || "iMersWamel Pro";
+        document.getElementById('dynamicAppName').innerText = appSettings.appName || "iMersWamel";
+        document.getElementById('dynamicTagline').innerText = appSettings.tagline || "Marketing Funnel Otomatis";
+        document.getElementById('submitBtn').innerText = appSettings.btnText || "Dapatkan Akses Sekarang";
+        document.getElementById('campaignInput').value = campaignId;
+
+        if (appSettings.showLogo && appSettings.logoUrl) {
+          document.getElementById('dynamicLogo').src = appSettings.logoUrl;
+          document.getElementById('logoWrapper').classList.remove('hidden');
+        }
+
+        // Loader Exit
+        loader.style.opacity = '0';
+        setTimeout(() => { 
+          loader.remove(); 
+          document.body.style.opacity = '1'; 
+          lucide.createIcons(); 
+        }, 600);
+
+      } catch (err) { 
+        console.error("iMersWamel Sync Error:", err); 
+        document.getElementById('loader-text').innerHTML = "<span class='text-rose-500 font-black tracking-widest'>GANGGUAN SERVER</span>";
+      }
+    }
+
+    /**
+     * FORM HANDLER
+     */
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const originalText = btn.innerText;
+      
+      btn.innerText = "⏳ SEDANG MEMPROSES..."; 
+      btn.disabled = true;
+      
+      const formData = new FormData(e.target);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        await fetch(WEB_APP_URL, { 
+          method: 'POST', 
+          mode: 'no-cors', 
+          body: JSON.stringify(payload) 
+        });
+
+        document.getElementById('formWrapper').classList.add('hidden');
+        document.getElementById('successState').classList.remove('hidden');
+        lucide.createIcons();
+
+        if (appSettings.redirectUrl) {
+          setTimeout(() => { 
+            window.location.href = appSettings.redirectUrl; 
+          }, 4000);
+        }
+      } catch (err) { 
+        btn.disabled = false; 
+        btn.innerText = originalText; 
+        alert("Maaf, coba lagi sesaat lagi.");
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+</html>
