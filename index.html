@@ -4,13 +4,13 @@
   <!-- 
     =========================================================================
     iMersWamel Pro - Professional Lead Capture Frontend
-    Version     : 4.5.0 (Ultra Detailed Edition)
+    Version     : 4.6.0 (Typography & Proportional Fix)
     Status      : Locked (Wasiat Dipatuhi - Tidak Diringkas)
     Line Target : > 491 Lines
     =========================================================================
     * Perhatian: File ini adalah gerbang utama pendaftaran leads.
+    * Update: Perbaikan ukuran font tombol agar proposional dan estetik.
     * Teknologi: Tailwind CSS, Vanilla JS, Lucide Icons, Google GAS API.
-    * Optimasi: Mobile Friendly, Proportional Sizing, Fast Load.
     =========================================================================
   -->
   <meta charset="UTF-8">
@@ -91,7 +91,7 @@
     .theme-clean .glass { 
       background: white; 
       border: 1px solid #e2e8f0; 
-      box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.05); 
+      box-shadow: 0 15px 40px -10px rgba(0,0,0,0.05); 
     }
     .theme-clean .input-control { 
       background: #f1f5f9; 
@@ -176,7 +176,6 @@
 
     /** * =========================================================================
      * 4. UI COMPONENTS (Buttons, Inputs, Glassmorphism)
-     * Desain yang proporsional sesuai perbaikan terakhir.
      * =========================================================================
      */
     .glass { 
@@ -213,15 +212,17 @@
       box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.1); 
     }
 
-    /* Action Button - Estetik & Proposional */
+    /* FIX REVISI: Action Button - Ukuran Proposional
+      Mengurangi letter-spacing agar teks tidak "meledak" keluar tombol.
+    */
     .btn-cta { 
       background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
       transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 700; /* Font weight diturunkan dari font-black biar lebih rapi */
       color: white;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em; /* Dikurangi drastis dari 0.04em */
     }
     
     .btn-cta:hover { 
@@ -345,8 +346,13 @@
               <input type="tel" name="wa" required placeholder="081234567890" class="input-control">
             </div>
 
-            <!-- Main Action Button -->
-            <button type="submit" id="submitBtn" class="btn-cta w-full py-5 md:py-6 rounded-xl md:rounded-2xl font-black text-lg md:text-xl mt-4 uppercase tracking-widest active:scale-95">
+            <!-- 
+               REVISI TOMBOL: Ukuran Teks & Proposi
+               - Mengubah text-lg md:text-xl menjadi text-base md:text-lg
+               - Mengubah tracking-widest menjadi tracking-wide
+               - Mengubah padding py-5 md:py-6 menjadi py-4 md:py-5
+            -->
+            <button type="submit" id="submitBtn" class="btn-cta w-full py-4 md:py-5 rounded-xl md:rounded-2xl font-extrabold text-base md:text-lg mt-4 uppercase tracking-wide active:scale-95">
               <!-- Teks dinamis dari server -->
             </button>
             
@@ -390,7 +396,7 @@
 
   <!-- 
     =========================================================================
-    CORE JAVASCRIPT ENGINE (v4.5.0)
+    CORE JAVASCRIPT ENGINE (v4.6.0)
     Logika utama sinkronisasi antara Frontend Vercel dan Backend Google Script.
     =========================================================================
   -->
@@ -399,7 +405,7 @@
      * 1. KONFIGURASI ENDPOINT
      * Alamat API Web App dari Google Apps Script.
      */
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyxLmq_IeePVWIQn-ULt8pGZBj9cBEVZE1PGBzYfrzkgavgl01-a0iUUD-wZmJoJqZ51g/exec"; 
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzXlMjRlKGybOmFvqukScuNr02qKs4VR46m3tIPep6ahuVkdPU0w0dGjhwJQ0YlQHuWew/exec"; 
 
     /**
      * 2. LOGIKA PENGENALAN CAMPAIGN
