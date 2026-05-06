@@ -4,36 +4,71 @@
   <!-- iMersWAMEL versi 1.0 - Terry Katar | imersnesia.com -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>iMersWamel | Professional Lead Capture</title>
+  <title>iMersWamel | Lead Capture</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Courier+Prime&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   
   <style id="dynamic-typography">
-    #dynamicAppName { font-size: 38px; font-family: 'Poppins', sans-serif; color: #ffffff; text-align: center !important; }
+    #dynamicAppName { font-size: 38px; font-family: 'Poppins', sans-serif; color: #ffffff; text-transform: none !important; text-align: center !important; }
   </style>
 
   <style>
-    body { font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 50px 16px; opacity: 0; transition: opacity 0.8s ease; overflow-x: hidden; text-transform: none !important; }
+    body { font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif; min-height: 100vh; min-height: -webkit-fill-available; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 50px 16px; opacity: 0; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.6s ease; overflow-x: hidden; overflow-y: auto; text-transform: none !important; }
+    html { height: -webkit-fill-available; }
+    
     .theme-midnight { background-color: #0f172a; color: white; }
-    .theme-midnight .glass { background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05); shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5); }
+    .theme-midnight .glass { background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5); }
     .theme-midnight .input-control { background: #0f172a; color: white; border: 1px solid rgba(255, 255, 255, 0.1); }
+
     .theme-clean { background-color: #f8fafc; color: #0f172a; }
-    .theme-clean .glass { background: white; border: 1px solid #e2e8f0; shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
+    .theme-clean .glass { background: white; border: 1px solid #e2e8f0; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
     .theme-clean .input-control { background: #f1f5f9; color: #0f172a; border: 1px solid #e2e8f0; }
-    #mainWrapper { width: 100%; display: flex; flex-direction: column; transition: 0.7s ease; max-width: 100%; margin-top: 1rem; }
+
+    .theme-nature { background-color: #022c22; color: white; }
+    .theme-nature .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(30px); }
+
+    #mainWrapper { width: 100%; display: flex; flex-direction: column; transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); max-width: 100%; margin-top: 1rem; }
     .layout-center { align-items: center; text-align: center; }
+    .layout-center #contentSide { margin-bottom: 2rem; width: 100%; max-width: 650px; }
+    .layout-center .glass { max-width: 440px; width: 100%; margin: 0 auto; }
+
     @media (min-width: 768px) {
-      .layout-split { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 60px !important; max-width: 1100px !important; margin: 4rem auto !important; }
+      .layout-split { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 60px !important; max-width: 1100px !important; margin: 4rem auto !important; text-align: left !important; }
       .layout-split #contentSide { width: 50% !important; text-align: center !important; display: flex !important; flex-direction: column !important; align-items: center !important; }
       .layout-split #formSide { width: 400px !important; flex-shrink: 0 !important; }
+      .layout-split #productImageWrapper { width: 100% !important; margin-top: 2rem !important; display: flex; justify-content: center !important; overflow: hidden; border-radius: 1.8rem; box-shadow: 0 30px 60px -10px rgba(0,0,0,0.4); }
+      .layout-split #productImage { max-height: 420px !important; width: 100% !important; object-fit: cover !important; transition: transform 0.6s ease; }
     }
+
+    @media (max-width: 767px) {
+      #productImageWrapper { width: 100% !important; aspect-ratio: 16 / 10 !important; margin-top: 2rem !important; border-radius: 1.5rem !important; overflow: hidden; }
+      #productImage { width: 100%; height: 100%; object-fit: cover; }
+      .glass { padding: 2.25rem 1.5rem !important; }
+    }
+
     .glass { border-radius: 1.8rem; padding: 2.25rem; position: relative; z-index: 10; }
     .input-control { width: 100%; padding: 0.9rem 1.2rem; border-radius: 0.8rem; margin-top: 0.4rem; outline: none; transition: 0.3s ease; font-size: 15px; font-weight: 500; }
-    .btn-cta { transition: 0.5s; cursor: pointer; font-weight: 800; color: white; padding: 1.4rem !important; display: block; width: 100%; text-align: center; border-radius: 1rem; border: none; }
-    #loader-overlay { position: fixed; inset: 0; background: #0f172a; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; }
+    .input-control:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
+
+    .btn-cta { 
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); 
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+      cursor: pointer; font-weight: 800; color: white; letter-spacing: 0.02em; text-transform: none !important;
+      padding-top: 1.4rem !important; padding-bottom: 1.4rem !important;
+      display: block; width: 100%; text-align: center; border-radius: 1rem; border: none;
+    }
+    .btn-cta:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.5); }
+
+    #protectedFooter { margin-top: 5rem; padding-bottom: 4rem; text-align: center; width: 100%; z-index: 5; }
+    .brand-copyright { opacity: 0.4; font-weight: 600; letter-spacing: 0.05em; font-size: 11px; color: #94a3b8; }
+    
+    #loader-overlay { position: fixed; inset: 0; background: #0f172a; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.7s ease; }
+    @keyframes fadeInSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-in { animation: fadeInSlide 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
     @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .success-pop { animation: popIn 0.7s forwards; }
+    .success-pop { animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
   </style>
 </head>
 <body class="theme-midnight">
@@ -45,48 +80,65 @@
     </div>
   </div>
 
-  <div id="mainWrapper" class="layout-center">
-    <div id="contentSide" class="z-20 px-4">
-      <div id="logoWrapper" class="hidden mb-10">
-        <img id="dynamicLogo" src="" class="h-16 w-auto mx-auto object-contain">
+  <div id="mainWrapper" class="layout-center animate-in">
+    <div id="contentSide" class="z-20 px-4 md:px-0">
+      <div id="logoWrapper" class="hidden mb-6 md:mb-10">
+        <img id="dynamicLogo" src="" alt="Identitas Bisnis" class="h-12 md:h-16 w-auto mx-auto object-contain">
       </div>
       <h1 id="dynamicAppName" class="font-black tracking-tighter mb-3 leading-tight"></h1>
-      <p id="dynamicTagline" class="text-[15px] md:text-lg font-medium opacity-80 mx-auto max-w-xl mb-4"></p>
-      <div id="productImageWrapper" class="hidden overflow-hidden rounded-3xl shadow-2xl mt-8">
-        <img id="productImage" src="" class="mx-auto object-cover w-full h-full">
+      <p id="dynamicTagline" class="text-[15px] md:text-lg font-medium opacity-80 leading-relaxed mx-auto max-w-md md:max-w-xl mb-4 px-2"></p>
+      <div id="productImageWrapper" class="hidden transform transition-all duration-1000 scale-95 opacity-0 overflow-hidden">
+        <img id="productImage" src="" alt="Showcase" class="mx-auto shadow-2xl">
       </div>
     </div>
 
-    <div id="formSide" class="w-full flex justify-center z-20 mt-8 px-4">
-      <main class="glass w-full max-w-[440px]">
+    <div id="formSide" class="w-full flex justify-center z-20 mt-8 md:mt-0 px-4">
+      <main class="glass w-full shadow-2xl">
         <div id="formWrapper">
-          <div class="text-center mb-10">
-            <h2 id="dynamicFormHeading" class="text-xl font-bold tracking-wider"></h2>
+          <div class="text-center mb-8 md:mb-10">
+            <h2 id="dynamicFormHeading" class="text-[18px] md:text-xl font-bold tracking-wider"></h2>
             <div class="w-10 h-1 bg-indigo-500 mx-auto mt-4 rounded-full opacity-60"></div>
           </div>
-          <form id="leadForm" onsubmit="handleSubmit(event)" class="space-y-5">
+          <form id="leadForm" onsubmit="handleSubmit(event)" class="space-y-4 md:space-y-5 text-left">
             <input type="hidden" id="campaignInput" name="campaign" value="GENERAL">
-            <div><label class="text-[10px] font-bold opacity-60 ml-1">Nama Lengkap</label><input type="text" name="nama" required placeholder="Tulis nama" class="input-control"></div>
-            <div><label class="text-[10px] font-bold opacity-60 ml-1">Alamat Email</label><input type="email" name="email" required placeholder="email@anda.com" class="input-control"></div>
-            <div><label class="text-[10px] font-bold opacity-60 ml-1">WhatsApp</label><input type="tel" name="wa" required placeholder="628xxxx" class="input-control"></div>
-            <button type="submit" id="submitBtn" class="btn-cta text-[18px] mt-6 active:scale-95"></button>
+            <div>
+              <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide">Nama Lengkap Pendaftar</label>
+              <input type="text" name="nama" required placeholder="Tulis nama lengkap Anda" class="input-control">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide">Alamat Email Aktif</label>
+              <input type="email" name="email" required placeholder="nama@email.com" class="input-control">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide">Nomor WhatsApp Aktif</label>
+              <input type="tel" name="wa" required placeholder="62 xxxxxxxxx" class="input-control">
+            </div>
+            <button type="submit" id="submitBtn" class="btn-cta text-[17px] md:text-[19px] mt-6 active:scale-95"></button>
+            <div class="flex items-center justify-center gap-3 mt-8 opacity-25">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-500"></i>
+              <p class="text-[9px] font-bold tracking-widest uppercase">Secure Leads Data Protection Active</p>
+            </div>
           </form>
         </div>
-        <div id="successState" class="hidden text-center py-16 success-pop">
-          <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8"><i data-lucide="check-circle" class="text-emerald-400 w-10 h-10"></i></div>
-          <h2 class="text-3xl font-black mb-4 text-emerald-500">TERKIRIM!</h2>
-          <p class="opacity-80">Harap tunggu instruksi selanjutnya via WhatsApp.</p>
+        <div id="successState" class="hidden text-center py-12 md:py-16 success-pop px-4">
+          <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/20 shadow-2xl">
+            <i data-lucide="check-circle" class="w-10 h-10 text-emerald-400"></i>
+          </div>
+          <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter text-emerald-500">Data Terkirim!</h2>
+          <p class="opacity-80 text-sm md:text-[17px] leading-relaxed mb-10 font-medium">Data pendaftaran Anda telah diamankan. Harap tunggu instruksi selanjutnya melalui WhatsApp.</p>
         </div>
       </main>
     </div>
   </div>
 
-  <footer id="protectedFooter" class="mt-20 py-10 text-center opacity-40 text-[11px] font-bold">
-    &copy; 2026 <a id="footerBrandLink" href="#">iMersWamel Pro</a>. All Rights Reserved.
+  <footer id="protectedFooter">
+    <p class="brand-copyright">
+      &copy; 2026 <a id="footerBrandLink" href="#" target="_blank"><span id="footerBrandName">iMersWamel Pro</span></a>. All Rights Reserved.
+    </p>
   </footer>
 
   <script>
-    // PENTING: Ganti URL di bawah dengan URL Web App Google lu yang baru kalo abis di-deploy ulang!
+    // PENTING: Gunakan URL Web App lu yang bener bos!
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyxLmq_IeePVWIQn-ULt8pGZBj9cBEVZE1PGBzYfrzkgavgl01-a0iUUD-wZmJoJqZ51g/exec"; 
     
     const getCampaignIdentity = () => {
@@ -117,14 +169,14 @@
         let btnStyle = "";
         
         if (colorTypeRaw === 'gradient') {
-          let gradStart = data.titleGradientStart || data.globalGradientStart || '#6366f1';
-          let gradEnd = data.titleGradientEnd || data.globalGradientEnd || '#a855f7';
-          colorStyle = `background: linear-gradient(to right, ${gradStart}, ${gradEnd}) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;`;
-          btnStyle = `background: linear-gradient(135deg, ${gradStart} 0%, ${gradEnd} 100%) !important; shadow: 0 10px 25px -5px ${gradStart}66 !important;`;
+          let gS = data.titleGradientStart || data.globalGradientStart || '#6366f1';
+          let gE = data.titleGradientEnd || data.globalGradientEnd || '#a855f7';
+          colorStyle = `background: linear-gradient(to right, ${gS}, ${gE}) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; color: transparent !important;`;
+          btnStyle = `background: linear-gradient(135deg, ${gS} 0%, ${gE} 100%) !important; box-shadow: 0 10px 25px -5px ${gS}66 !important;`;
         } else {
-          let solidColor = data.titleColorSolid || data.globalColorSolid || '#ffffff';
-          colorStyle = `color: ${solidColor} !important;`;
-          btnStyle = `background-color: ${solidColor} !important; shadow: 0 10px 25px -5px ${solidColor}66 !important;`;
+          let sC = data.titleColorSolid || data.globalColorSolid || '#ffffff';
+          colorStyle = `color: ${sC} !important; background: none !important; -webkit-text-fill-color: initial !important;`;
+          btnStyle = `background-color: ${sC} !important; box-shadow: 0 10px 25px -5px ${sC}66 !important;`;
         }
 
         styleTag.innerHTML = `
@@ -139,8 +191,11 @@
         const showImg = String(data.showProductImg).toLowerCase() === "true" || String(data.masterShowProductImg).toLowerCase() === "true";
 
         if (showImg && imgUrl) {
-          document.getElementById('productImage').src = imgUrl;
-          document.getElementById('productImageWrapper').classList.remove('hidden');
+          const pImg = document.getElementById('productImage');
+          const pWrap = document.getElementById('productImageWrapper');
+          pImg.src = imgUrl;
+          pWrap.classList.remove('hidden');
+          setTimeout(() => { pWrap.classList.add('scale-100', 'opacity-100'); }, 250);
         }
 
         document.title = data.appName || "iMersWamel";
@@ -150,6 +205,11 @@
         document.getElementById('submitBtn').innerText = data.btnText || "Dapatkan Akses";
         document.getElementById('campaignInput').value = campaignId;
         
+        if (data.appName) {
+          document.getElementById('footerBrandName').innerText = data.appName;
+          document.getElementById('footerBrandLink').href = data.websiteUrl || "#";
+        }
+
         if (data.logoUrl) {
           document.getElementById('dynamicLogo').src = data.logoUrl;
           document.getElementById('logoWrapper').classList.remove('hidden');
@@ -164,15 +224,18 @@
     async function handleSubmit(event) {
       event.preventDefault();
       const btn = document.getElementById('submitBtn');
-      btn.innerText = "⏳ SENDING..."; btn.disabled = true;
+      btn.innerText = "⏳ SEDANG MENGIRIM DATA..."; btn.disabled = true;
       const payload = Object.fromEntries(new FormData(event.target).entries());
       try {
         await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
-        document.getElementById('formWrapper').classList.add('hidden');
-        document.getElementById('successState').classList.remove('hidden');
-        lucide.createIcons();
-        if (currentSettings.redirectUrl) setTimeout(() => { window.location.href = currentSettings.redirectUrl; }, 3000);
-      } catch (e) { btn.disabled = false; btn.innerText = "RETRY"; }
+        document.getElementById('formWrapper').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('formWrapper').classList.add('hidden');
+          document.getElementById('successState').classList.remove('hidden');
+          lucide.createIcons();
+        }, 400);
+        if (currentSettings.redirectUrl) setTimeout(() => { window.location.href = currentSettings.redirectUrl; }, 4000);
+      } catch (e) { btn.disabled = false; btn.innerText = "COBA LAGI"; }
     }
 
     document.addEventListener('DOMContentLoaded', initializeApplication);
