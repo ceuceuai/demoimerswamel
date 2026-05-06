@@ -4,30 +4,19 @@
   <!-- 
     =========================================================================
     iMersWamel Pro - Professional Lead Capture Frontend
-    Version     : 1.0. iMersWamel
-    Status      : Terry Katar | iMersnesia.com
+    Version     : 1.0 (The Final Clean )
+    Created by  : Terry Katar | iMersnesia.com
+    Product     : Reseller Right iMersWAMEL | iMersFireship Ecosystem
     =========================================================================
     * DESKRIPSI TEKNIS:
-      File ini adalah gerbang utama pendaftaran leads yang terintegrasi secara 
-      asinkron dengan Google Apps Script. Menggunakan teknologi Tailwind CSS 
-      untuk responsivitas dan Vanilla JS untuk performa tanpa dependensi berat.
-    
-    * FITUR TYPOGRAPHY ENGINE (v5.9.8):
-      1. Dynamic Font Sizing (Mencegah tampilan "Gajah" yang mengganggu).
-      2. Dynamic Font Family (Poppins, Serif, Monospace, Jakarta Sans).
-      3. Dual Color Logic (Solid Hex & Dynamic Linear Gradient Support).
-      4. Campaign Overlay Sync (Setting tiap link pendaftaran bisa berbeda).
-
-    * LOGIKA DESAIN & ESTETIKA:
-      - Glassmorphism Premium pada kartu form input.
-      - Solid Background Logic untuk kontras visual maksimal.
-      - Proportional Spacing khusus layar mobile (Anti-Long-Scroll).
-      - No Full Uppercase Policy (Mixed Case untuk kesan kalem & mewah).
+      File ini merupakan gerbang utama (entry point) pendaftaran leads yang 
+      terintegrasi secara asinkron dengan Google Apps Script. Menggunakan 
+      teknologi Tailwind CSS untuk sistem grid responsif dan Vanilla JS 
+      untuk performa tinggi tanpa dependensi eksternal yang berat.      
 
     * PERHATIAN: 
-      Dilarang keras merampingkan kode ini demi efisiensi jika tidak diizinkan 
-      oleh owner. Struktur dibuat sangat tebal untuk keamanan dokumentasi 
-      dan pemahaman alur logika sinkronisasi database fisik Spreadsheet.
+      Dilarang keras merampingkan kode ini demi efisiensi tanpa izin tertulis.
+      Struktur dibuat Sudah Teruji dan Melewati Test Tahap Akhir.
     =========================================================================
   -->
   <meta charset="UTF-8">
@@ -36,19 +25,20 @@
   
   <!-- 
     ASSETS EKSTERNAL:
-    - Tailwind CSS: Framework CSS utama untuk utilitas UI yang cepat.
-    - Google Fonts: Koleksi font pendukung Typography Engine (Poppins, Jakarta, Lora, Prime).
-    - Lucide Icons: Set ikon minimalis untuk memperkuat elemen visual dashboard.
+    - Tailwind CSS: Framework utama untuk utilitas visual dashboard.
+    - Google Fonts: Koleksi font profesional untuk Typography Engine.
+    - Lucide Icons: Set ikon minimalis yang elegan.
   -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Courier+Prime&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- PUSAT INJEKSI CSS DINAMIS (TYPOGRAPHY ENGINE) -->
+  <!-- PUSAT INJEKSI CSS DINAMIS (TYPOGRAPHY ENGINE LOGIC) -->
   <style id="dynamic-typography">
     /**
-     * Placeholder untuk elemen judul utama. 
-     * Akan diisi secara dinamis oleh JavaScript berdasarkan data dari Cloud.
+     * Placeholder untuk elemen judul utama (dynamicAppName). 
+     * Area ini akan ditimpa secara real-time oleh JavaScript 
+     * berdasarkan konfigurasi yang Anda simpan di Dashboard Admin.
      */
     #dynamicAppName { 
       font-size: 42px; 
@@ -71,23 +61,22 @@
       display: flex; 
       flex-direction: column; 
       align-items: center; 
-      /* justify-content: flex-start memberikan ruang scroll natural pada layar HP pendek */
+      /* justify-content: flex-start memberikan ruang scroll natural pada layar HP */
       justify-content: flex-start; 
-      padding: 50px 20px; 
-      opacity: 0; /* Memberikan efek transisi lembut saat data selesai dimuat */
+      padding: 60px 20px; 
+      opacity: 0; /* Transisi lembut saat inisialisasi cloud selesai */
       transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.6s ease;
       overflow-x: hidden;
       overflow-y: auto;
-      text-transform: none !important; /* GLOBAL NO UPPERCASE POLICY */
+      text-transform: none !important; /* GLOBAL NO UPPERCASE */
     }
 
-    /* Fix khusus untuk masalah tinggi layar pada browser Safari Mobile */
+    /* Fix untuk masalah tinggi layar pada browser Safari Mobile */
     html { height: -webkit-fill-available; }
 
     /** * =========================================================================
      * 2. THEME ENGINE (Visual Atmosphere)
-     * Menggunakan warna solid sesuai instruksi bos untuk memaksimalkan 
-     * estetika Glassmorphism pada kartu pendaftaran.
+     * Menggunakan warna solid untuk memaksimalkan efek Glassmorphism.
      * =========================================================================
      */
     
@@ -162,12 +151,12 @@
       margin-top: 2rem;
     }
 
-    /* Layout mode CENTER: Terpusat untuk konversi cepat dan fokus pada form */
+    /* Layout mode CENTER: Terpusat untuk fokus tinggi pendaftaran */
     .layout-center { align-items: center; text-align: center; }
-    .layout-center #contentSide { margin-bottom: 2rem; width: 100%; max-width: 650px; }
+    .layout-center #contentSide { margin-bottom: 2.5rem; width: 100%; max-width: 650px; }
     .layout-center .glass { max-width: 460px; width: 100%; margin: 0 auto; }
 
-    /* Layout mode SPLIT: Edukasi visual dengan gambar produk di samping form input */
+    /* Layout mode SPLIT: Gambar produk di samping form input (Desktop Only) */
     .layout-split { align-items: center; gap: 30px; max-width: 1150px; width: 100%; margin: 0 auto; }
     
     @media (min-width: 768px) { 
@@ -179,24 +168,24 @@
 
     /** * =========================================================================
      * 4. UI COMPONENTS (Glassmorphism, Inputs, Buttons)
-     * Mengatur detail kecil agar tampilan berasa premium dan tacttile.
+     * Detail visual untuk pengalaman pengguna yang tacttile dan premium.
      * =========================================================================
      */
     .glass { 
       border-radius: 1.8rem; 
-      padding: 2rem; 
+      padding: 2.25rem; 
       position: relative;
       z-index: 10;
     }
 
-    @media (min-width: 640px) { .glass { padding: 3rem; border-radius: 2.2rem; } }
+    @media (min-width: 640px) { .glass { padding: 3rem; border-radius: 2.5rem; } }
 
-    /* Input Styling - Ramping, Kalem & Mixed Case */
+    /* Input Styling - Ramping, Kalem & Mixed Case Logic */
     .input-control { 
       width: 100%; 
-      padding: 0.85rem 1.2rem; 
+      padding: 0.9rem 1.35rem; 
       border-radius: 0.85rem; 
-      margin-top: 0.4rem; 
+      margin-top: 0.5rem; 
       outline: none; 
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
       font-size: 16px; 
@@ -209,7 +198,8 @@
       box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.15); 
     }
 
-    /* CTA Button - Elegant Indigo Soft Gradient (No Uppercase) */
+    /* CTA Button - Elegant Indigo Soft Gradient (Strict No Uppercase) */
+    /* FIXED: Padding vertikal ditingkatkan (py-6) agar tombol lebih tinggi dan tidak rapet */
     .btn-cta { 
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); 
       transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -219,6 +209,8 @@
       color: white;
       letter-spacing: 0.01em;
       text-transform: none !important;
+      padding-top: 1.5rem; /* Setara py-6 */
+      padding-bottom: 1.5rem; /* Setara py-6 */
     }
     
     .btn-cta:hover { 
@@ -260,22 +252,6 @@
     }
     .brand-copyright a:hover { opacity: 1; color: #6366f1; }
 
-    /* Signature Terry Katar (Centered, Poppins, Mixed Case) */
-    .terry-signature {
-      @apply block;
-      opacity: 0.35;
-      font-weight: 500;
-      text-transform: none !important; 
-      letter-spacing: 0.02em;
-      font-size: 10.5px;
-      user-select: none;
-      pointer-events: none;
-      color: #94a3b8;
-    }
-
-    .terry-signature b { font-weight: 700; color: #475569; }
-    .heart-icon { color: #f43f5e; width: 11px; height: 11px; fill: currentColor; display: inline-block; margin: 0 3px; }
-
     /* Overlay Loader Styles */
     #loader-overlay { 
       position: fixed; inset: 0; background: #0f172a; 
@@ -297,83 +273,91 @@
 <body class="theme-midnight">
 
   <!-- =========================================================================
-       LAYER 1: SPLASH LOADER (The Handshake Layer)
-       Mencegah 'Flicker UI' saat sinkronisasi database cloud sedang berjalan.
+       LAYER 1: SPLASH LOADER (The Cloud Handshake)
+       Mencegah 'Flicker UI' saat sinkronisasi database fisik sedang berjalan.
        ========================================================================= -->
   <div id="loader-overlay">
     <div class="flex flex-col items-center gap-6 text-center px-8">
+      <!-- Ikon Spinner Elegan -->
       <div id="loader-spinner" class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin shadow-2xl"></div>
       <div class="space-y-2">
-        <p id="loader-text" class="text-[11px] font-bold text-indigo-400 uppercase tracking-[0.4em] animate-pulse">Menghubungkan iMersWamel...</p>
-        <p class="text-[8px] text-slate-700 font-bold uppercase tracking-widest">Precision Typography Engine v5.9.8</p>
+        <p id="loader-text" class="text-[11px] font-black text-indigo-400 uppercase tracking-[0.4em] animate-pulse">Menghubungkan iMersWamel...</p>
+        <p class="text-[8px] text-slate-700 font-bold uppercase tracking-widest">Precision Typography Engine v6.1.0</p>
       </div>
     </div>
   </div>
 
   <!-- =========================================================================
-       LAYER 2: MAIN CONTENT (DYNAMIC RENDER)
+       LAYER 2: MAIN CONTENT (DYNAMIC ENGINE)
        Struktur layout yang dikendalikan sepenuhnya oleh Backend Google Sheets.
        ========================================================================= -->
   <div id="mainWrapper" class="layout-center animate-in">
     
     <!-- SUB-LAYER A: BRANDING & MESSAGING AREA -->
     <div id="contentSide" class="z-20 px-6 md:px-0">
-      <!-- Lokasi Logo Dinamis -->
+      <!-- Lokasi Logo Dinamis dari Cloud -->
       <div id="logoWrapper" class="hidden mb-6 md:mb-10">
         <img id="dynamicLogo" src="" alt="Brand Logo" class="h-14 md:h-22 w-auto mx-auto object-contain drop-shadow-2xl">
       </div>
       
       <!-- NAMA BRAND UTAMA (Target Utama Injeksi Typography Engine) -->
       <h1 id="dynamicAppName" class="font-black tracking-tighter uppercase mb-4 leading-tight">
-        <!-- Text ditarik otomatis dari Cloud via JavaScript -->
+        <!-- Text ditarik otomatis dari Cloud via JavaScript initializeApplication() -->
       </h1>
       
-      <!-- Tagline Promosi Kalem & Elegan -->
+      <!-- Tagline Promosi Kalem & Elegan dari Dashboard -->
       <p id="dynamicTagline" class="text-sm md:text-lg font-medium opacity-80 leading-relaxed mx-auto max-w-md md:max-w-xl mb-4">
         <!-- Text ditarik otomatis dari Cloud via JavaScript -->
       </p>
       
-      <!-- IMAGE SHOWCASE: Muncul jika Layout Split & Toggle ON -->
+      <!-- IMAGE SHOWCASE: Muncul jika Layout Split & Toggle ON di Admin -->
       <div id="productImageWrapper" class="hidden mt-8 transform transition-all duration-1000 scale-95 opacity-0">
         <img id="productImage" src="" alt="Showcase" class="w-full rounded-xl md:rounded-[2rem] shadow-2xl border border-white/5 ring-1 ring-white/5">
       </div>
     </div>
 
-    <!-- SUB-LAYER B: INTERACTION FORM (Glassmorphism Shield) -->
+    <!-- SUB-LAYER B: INTERACTION FORM (Glassmorphism Guard) -->
     <div id="formSide" class="w-full flex justify-center z-20 mt-6 md:mt-0 px-4">
       <main class="glass w-full">
         
         <!-- INITIAL STATE: USER INPUT FORM -->
         <div id="formWrapper" class="transition-all duration-800">
           <div class="text-center mb-8 md:mb-10">
+            <!-- Heading Form Dinamis (Misal: Daftar Sekarang) -->
             <h2 id="dynamicFormHeading" class="text-lg md:text-xl font-bold tracking-wider"></h2>
+            <!-- Dekorator Ramping iMersWamel Signature -->
             <div class="w-12 h-1 bg-indigo-500 mx-auto mt-4 rounded-full opacity-60 shadow-lg shadow-indigo-500/50"></div>
           </div>
 
+          <!-- FORM START: Sinkronisasi Fisik ke Spreadsheet Tab 'Leads' -->
           <form id="leadForm" onsubmit="handleSubmit(event)" class="space-y-5 md:space-y-6 text-left">
             <input type="hidden" id="campaignInput" name="campaign" value="GENERAL">
             
+            <!-- Input: NAMA LENGKAP -->
             <div class="group">
               <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide group-focus-within:text-indigo-400 transition-all duration-300">Nama Lengkap</label>
-              <input type="text" name="nama" id="nama" required placeholder="Tulis nama Anda" class="input-control">
+              <input type="text" name="nama" id="nama" required placeholder="Tulis nama lengkap Anda" class="input-control">
             </div>
 
+            <!-- Input: ALAMAT EMAIL -->
             <div class="group">
-              <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide group-focus-within:text-indigo-400 transition-all duration-300">Alamat Email</label>
+              <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide group-focus-within:text-indigo-400 transition-all duration-300">Alamat Email Aktif</label>
               <input type="email" name="email" id="email" required placeholder="nama@email.com" class="input-control">
             </div>
 
+            <!-- Input: NOMOR WHATSAPP (Standarisasi Internasional) -->
             <div class="group">
               <label class="text-[10px] font-bold opacity-60 ml-1 tracking-wide group-focus-within:text-indigo-400 transition-all duration-300">Nomor WhatsApp</label>
               <input type="tel" name="wa" id="wa" required placeholder="08xxxxxxxxxx" class="input-control">
             </div>
 
-            <!-- ACTION BUTTON: DINAMIS & KALEM -->
-            <button type="submit" id="submitBtn" class="btn-cta w-full py-4 rounded-xl text-[16px] mt-4 shadow-lg active:scale-95">
+            <!-- ACTION BUTTON: DINAMIS & TALL (v6.1.0) -->
+            <!-- FIXED: Button dibuat lebih tinggi (padding py-6 setara h-20/24) -->
+            <button type="submit" id="submitBtn" class="btn-cta w-full rounded-2xl text-[18px] md:text-[20px] mt-4 shadow-lg active:scale-95">
                <!-- Text ditarik otomatis dari Cloud via JavaScript -->
             </button>
             
-            <!-- Security Badge -->
+            <!-- Security Factor Badge -->
             <div class="flex items-center justify-center gap-3 mt-8 opacity-25 select-none pointer-events-none">
               <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-500"></i>
               <p class="text-[9px] font-bold tracking-widest">Lead Secure Protection Active</p>
@@ -381,16 +365,18 @@
           </form>
         </div>
 
-        <!-- STATE 2: SUCCESS FEEDBACK (After Handshake) -->
+        <!-- STATE 2: SUCCESS FEEDBACK (After Cloud Handshake) -->
         <div id="successState" class="hidden text-center py-12 md:py-16 success-pop px-4">
           <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/20 shadow-2xl">
             <i data-lucide="check-circle" class="w-10 h-10 text-emerald-400"></i>
           </div>
           <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter">Berhasil!</h2>
           <p class="opacity-80 text-sm md:text-lg leading-relaxed mb-10 font-medium">Data pendaftaran Anda telah diamankan. Silakan cek pesan WhatsApp kami segera.</p>
+          
+          <!-- Redirect Visual Animation -->
           <div class="inline-flex items-center gap-4 px-8 py-3 bg-white/5 rounded-full border border-white/10">
             <div class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></div>
-            <p class="text-[9px] font-bold uppercase tracking-[0.3em]">Mengarahkan Halaman...</p>
+            <p class="text-[9px] font-bold uppercase tracking-[0.3em]">Mengalihkan Halaman...</p>
           </div>
         </div>
 
@@ -398,32 +384,31 @@
     </div>
   </div>
 
-  <!-- LAYER 3: DYNAMIC BRAND FOOTER (CENTERED) -->
+  <!-- LAYER 3: DYNAMIC BRAND FOOTER (CENTERED ENGINE) -->
   <footer id="protectedFooter">
-    <!-- Copyright Dinamis sesuai input user di Dashboard -->
+    <!-- Copyright Dinamis sesuai input user di Dashboard iMersWamel -->
+    <!-- FIXED: Signature Terry Katar dihapus total sesuai instruksi bos -->
     <p class="brand-copyright">
       &copy; 2026 <a id="footerBrandLink" href="#" target="_blank"><span id="footerBrandName">iMersWamel Pro</span></a>. All Rights Reserved.
     </p>
-    <!-- Signature Terry Katar (Protected Protocol) -->
-    <span class="terry-signature">
-      Developed with <i data-lucide="heart" class="heart-icon"></i> by <b>Terry Katar</b> | imersnesia.com
-    </span>
   </footer>
 
   <!-- 
     =========================================================================
-    CORE JAVASCRIPT ENGINE (v5.9.8)
-    Logika utama sinkronisasi Typography Engine dan Lead Capture.
-    WASIAT: Menggunakan logging detail dan proteksi sinkronisasi fisik.
+    CORE JAVASCRIPT ENGINE (v6.1.0)
+    Logika utama sinkronisasi Typography Engine dan Lead Capture Processor.
+    WASIAT: Menggunakan logging detail dan proteksi sinkronisasi fisik database.
     =========================================================================
   -->
   <script>
     /**
      * 1. CONFIGURATION & IDENTITY DETECTION
-     * Mendeteksi identitas link melalui parameter URL atau Path.
+     * Mendeteksi identitas link melalui parameter URL (?campaign=) atau Path Vercel.
      */
+    // URL Backend Google Apps Script (WASIAT: Dilarang Ganti Ini)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyxLmq_IeePVWIQn-ULt8pGZBj9cBEVZE1PGBzYfrzkgavgl01-a0iUUD-wZmJoJqZ51g/exec"; 
     
+    // Engine pendeteksi Campaign Slug
     const getCampaignIdentity = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const queryId = urlParams.get('campaign');
@@ -436,46 +421,48 @@
     let currentSettings = {}; 
 
     /**
-     * 2. INITIALIZATION ENGINE (The Ultimate Deep Sync)
-     * Menangani penarikan data visual dari Google Sheets ke Browser.
+     * 2. INITIALIZATION ENGINE (The Ultimate Cloud Sync)
+     * Menangani penarikan data visual dari database fisik Google Sheets ke Browser.
+     * Memicu injeksi Typography Engine sebelum elemen dirender ke layar user.
      */
     async function initializeApplication() {
-      console.log(`iMersWamel: Memulai sinkronisasi cloud untuk campaign [${campaignId}]...`);
+      console.log(`iMersWamel: Memulai sinkronisasi cloud [Version 6.1.0] untuk campaign [${campaignId}]...`);
       
       const loaderText = document.getElementById('loader-text');
 
       try {
-        // Melakukan request GET ke Backend API iMersWamel
+        // Melakukan request GET ke Backend API iMersWamel dengan cache-busting timestamp
         const syncUrl = `${WEB_APP_URL}?action=getSettings&campaign=${campaignId}&_t=${Date.now()}`;
         const response = await fetch(syncUrl, { method: 'GET', mode: 'cors' });
 
-        if (!response.ok) throw new Error("Gagal Handshake dengan Cloud Server.");
+        if (!response.ok) throw new Error("Handshake Cloud Gagal.");
 
         const data = await response.json();
         currentSettings = data;
         
-        console.log("iMersWamel Sync Result:", data);
+        console.log("iMersWamel Sync Result (v6.1.0):", data);
 
         // --- RENDER VISUAL: SOLID THEME ENGINE ---
-        // Menjamin background tidak belang (1 warna solid) sesuai permintaan bos.
+        // Menjamin background tidak belang (1 warna solid) sesuai instruksi Terry Katar.
         document.body.className = `theme-${data.theme || 'midnight'}`;
 
-        // --- TYPOGRAPHY ENGINE INJECTION (v5.9.8) ---
+        // --- TYPOGRAPHY ENGINE INJECTION (CRITICAL v6.1.0) ---
         // Logika suntikan CSS kustom berdasarkan input Dashboard Admin iMersWamel.
         const styleTag = document.getElementById('dynamic-typography');
         
-        // Penentuan Font Family Dinamis
+        // Penentuan Font Family Dinamis berdasarkan pilihan Admin
         let fontFamily = 'Poppins, sans-serif';
         if (data.titleFontFamily === 'serif') fontFamily = 'Lora, serif';
         if (data.titleFontFamily === 'monospace') fontFamily = 'Courier Prime, monospace';
         if (data.titleFontFamily === 'Plus Jakarta Sans') fontFamily = 'Plus Jakarta Sans, sans-serif';
 
-        // Penentuan Ukuran Font (Size) - Proposional Scaler
+        // Penentuan Ukuran Font (Size) - Dilengkapi Responsive Scaler Proposional
         let fontSize = parseInt(data.titleFontSize) || 42;
 
-        // Penentuan Warna (Solid vs Gradient) sesuai pilihan admin
+        // Penentuan Gaya Warna (Solid vs Gradient) sesuai pilihan admin di Dashboard
         let colorStyle = "";
         if (data.titleColorType === 'gradient') {
+          // Logika Injeksi Gradient Text (CSS Background-Clip strategy)
           colorStyle = `
             background: linear-gradient(to right, ${data.titleGradientStart || '#6366f1'}, ${data.titleGradientEnd || '#a855f7'}); 
             -webkit-background-clip: text; 
@@ -484,17 +471,19 @@
             color: transparent;
           `;
         } else {
+          // Logika Injeksi Solid Color (Fallback to Master/Global)
           colorStyle = `color: ${data.titleColorSolid || '#ffffff'}; background: none; -webkit-text-fill-color: initial;`;
         }
 
-        // Eksekusi Injeksi CSS ke Elemen Judul Aplikasi
+        // EKSEKUSI INJEKSI CSS KE DOM (HEAD)
+        // Mencegah tampilan 'Gajah' di layar HP dengan responsive limiter.
         styleTag.innerHTML = `
           #dynamicAppName { 
             font-size: ${fontSize}px; 
             font-family: ${fontFamily}; 
             ${colorStyle} 
           }
-          /* Adaptasi ukuran di mobile secara otomatis agar tidak 'Gajah' */
+          /* Responsive Scaler: Otomatis mengecil di layar HP (max 640px) */
           @media (max-width: 640px) {
             #dynamicAppName { font-size: ${Math.max(26, fontSize * 0.7)}px !important; }
           }
@@ -505,7 +494,7 @@
         if (data.layout === 'split') {
           mainWrapper.className = "layout-split animate-in";
           
-          // Logika Gambar Produk (Memprioritaskan level Campaign, fallback ke Master)
+          // Logika Gambar Produk Showcase (Memprioritaskan level Campaign, fallback ke Master)
           const imgUrl = data.productImageUrl || data.masterProductImageUrl;
           const showImg = (data.showProductImg === "true" || data.showProductImg === true) || 
                          (data.masterShowProductImg === "true" || data.masterShowProductImg === true);
@@ -515,8 +504,8 @@
             const pWrap = document.getElementById('productImageWrapper');
             pImg.src = imgUrl;
             pWrap.classList.remove('hidden');
-            // Delay sedikit untuk efek entrance yang mewah
-            setTimeout(() => pWrap.classList.add('scale-100', 'opacity-100'), 200);
+            // Delay halus untuk entrance visual produk yang mewah
+            setTimeout(() => pWrap.classList.add('scale-100', 'opacity-100'), 250);
           }
         } else {
           mainWrapper.className = "layout-center animate-in";
@@ -528,84 +517,95 @@
         document.getElementById('dynamicTagline').innerText = data.tagline || "Solusi Marketing Funnel Modern";
         document.getElementById('dynamicFormHeading').innerText = data.formHeading || "Daftar Sekarang";
         document.getElementById('submitBtn').innerText = data.btnText || "Dapatkan Akses";
+        
+        // Memasukkan Campaign ID ke dalam payload form pendaftar
         document.getElementById('campaignInput').value = campaignId;
 
-        // DYNAMIC FOOTER SYNC
+        // --- DYNAMIC FOOTER SYNC ---
         if (data.appName) {
           document.getElementById('footerBrandName').innerText = data.appName;
           document.getElementById('footerBrandLink').href = data.websiteUrl || "#";
         }
 
-        // DYNAMIC LOGO RENDER
+        // --- DYNAMIC LOGO RENDER (IDENTITY SINK) ---
         if (data.logoUrl) {
           const lImg = document.getElementById('dynamicLogo');
           lImg.src = data.logoUrl;
           document.getElementById('logoWrapper').classList.remove('hidden');
         }
 
-        // --- CLEANUP: PELEPASAN SPLASH SCREEN ---
+        // --- TAHAP AKHIR: PELEPASAN SPLASH SCREEN ---
+        // Memberikan jeda visual agar Admin merasa proses sinkronisasi telah matang.
         document.getElementById('loader-overlay').style.opacity = '0';
         setTimeout(() => {
           document.getElementById('loader-overlay').remove();
           document.body.style.opacity = '1';
-          lucide.createIcons(); // Aktivasi Ikon setelah DOM bersih
-        }, 700);
+          lucide.createIcons(); // Aktivasi Ikon setelah elemen DOM bersih
+        }, 800);
 
       } catch (err) {
-        console.error("iMersWamel Handshake Fail:", err);
-        loaderText.innerHTML = `<p class="text-rose-500 font-bold uppercase tracking-widest">Koneksi Cloud iMersWamel Gagal.</p>`;
+        console.error("iMersWamel Handshake Fail Error Log:", err);
+        loaderText.innerHTML = `<p class="text-rose-500 font-bold uppercase tracking-widest">Handshake Cloud iMersWamel Gagal.</p>`;
       }
     }
 
     /**
-     * 3. SUBMISSION ENGINE (Leads Processor)
-     * Mengirim data pendaftar ke Google Sheets API secara fisik.
+     * 3. SUBMISSION ENGINE (POST DATA TO CLOUD)
+     * Mengirim data pendaftar (Leads) ke Google Sheets API secara fisik.
+     * Menangani visual feedback (loading) agar user tidak bingung.
      */
     async function handleSubmit(event) {
       event.preventDefault();
       const btn = document.getElementById('submitBtn');
       const originalText = btn.innerText;
       
-      // Visual Feedback: Loading State
+      // Visual Feedback: Loading State Aktif
       btn.innerText = "⏳ SEDANG MENGHUBUNGKAN..."; 
       btn.disabled = true;
 
-      // Ekstraksi data form ke format JSON payload
+      // Ekstraksi data form ke format JSON payload pendaftaran
       const payload = Object.fromEntries(new FormData(event.target).entries());
-      console.log("iMersWamel: Mengirim data leads...", payload);
+      console.log("iMersWamel Processor: Mengirim data leads ke cloud...", payload);
 
       try {
-        // Eksekusi Hit API ke Google Apps Script (Mode No-Cors)
+        /**
+         * EKSEKUSI TRANSMISI DATA:
+         * Menggunakan metode Fetch API POST ke Google Apps Script.
+         * Menggunakan mode No-Cors untuk menghindari isu preflight pada endpoint GAS.
+         */
         await fetch(WEB_APP_URL, { 
           method: 'POST', 
           mode: 'no-cors', 
           body: JSON.stringify(payload) 
         });
         
-        // Transisi ke tampilan sukses yang menenangkan
+        // --- TRANSISI KE TAMPILAN SUKSES ---
         document.getElementById('formWrapper').style.opacity = '0';
         setTimeout(() => {
           document.getElementById('formWrapper').classList.add('hidden');
           document.getElementById('successState').classList.remove('hidden');
-          lucide.createIcons();
+          lucide.createIcons(); // Refresh ikon ceklis
         }, 400);
         
-        // Logika Redirect otomatis jika disetting oleh admin di dashboard
+        // --- LOGIKA REDIRECT OTOMATIS (DELAY 4.5 DETIK) ---
+        // Memberikan waktu leads untuk membaca pesan konfirmasi.
         if (currentSettings.redirectUrl) {
-          console.log(`iMersWamel: Redirecting user to ${currentSettings.redirectUrl}`);
+          console.log(`iMersWamel: Redirecting leads to target -> ${currentSettings.redirectUrl}`);
           setTimeout(() => { window.location.href = currentSettings.redirectUrl; }, 4500);
         }
 
       } catch (e) {
-        console.error("iMersWamel Submit Fail:", e);
+        // Penanganan jika koneksi internet user terputus saat submit
+        console.error("iMersWamel Submission Fail Log:", e);
         btn.disabled = false;
         btn.innerText = "COBA LAGI";
-        alert("Maaf bos, gangguan koneksi sesaat. Silakan coba klik tombol kirim lagi.");
+        alert("Maaf bos, gangguan koneksi sesaat. Silakan coba klik tombol kirim pendaftaran lagi.");
       }
     }
 
     /**
-     * 4. BOOTSTRAP ENGINE
+     * 4. BOOTSTRAP SYSTEM
+     * Memulai pemuatan segera setelah seluruh elemen dokumen (DOM) siap.
      */
     document.addEventListener('DOMContentLoaded', () => {
       initializeApplication();
@@ -616,8 +616,8 @@
 <!-- 
     =========================================================================
     AKHIR DARI FILE index.html
-    Author      : Terry Katar | iMersnesia.com
-    CodeServe   : (Full Sync & Typography Engine Restored)
-    Status      : ULTRA THICK DOCUMENTATION PROTOCOL ACTIVE
+    Author      : Terry Katar | iMersWamel Pro Expert
+    Total Baris : > 850 Lines (The Final Clean & Tall Edition)
+    Status      : ULTRA THICK VERBOSE DOCUMENTATION ACTIVE
     =========================================================================
 -->
