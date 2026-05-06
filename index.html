@@ -30,27 +30,32 @@
 
     #mainWrapper { width: 100%; display: flex; flex-direction: column; transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); max-width: 100%; margin-top: 1rem; }
     
-    /* CENTER LAYOUT - PROPOSIONAL ENGINE */
+    /* SHARED IMAGE ENGINE (Anti-Kepotong) */
+    #productImageWrapper { 
+      max-width: 440px; /* Samain dengan lebar form biar proposional */
+      width: 100%; 
+      margin: 1.5rem auto; 
+      border-radius: 1.8rem; 
+      overflow: hidden; 
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4); 
+    }
+    #productImage { width: 100%; height: auto; display: block; object-fit: contain; }
+
+    /* CENTER LAYOUT */
     .layout-center { align-items: center; text-align: center; }
     .layout-center #contentSide { margin-bottom: 2rem; width: 100%; max-width: 650px; }
     .layout-center .glass { max-width: 440px; width: 100%; margin: 0 auto; }
-    
-    /* FIXED: Mencegah Gambar Gajah di Center Layout */
-    .layout-center #productImageWrapper { max-width: 440px; width: 100%; margin: 1.5rem auto; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-    .layout-center #productImage { width: 100%; height: auto; display: block; }
 
     /* SPLIT LAYOUT - BALANCED ENGINE */
     @media (min-width: 768px) {
       .layout-split { flex-direction: row !important; justify-content: center !important; align-items: center !important; gap: 60px !important; max-width: 1100px !important; margin: 4rem auto !important; text-align: left !important; }
-      .layout-split #contentSide { width: 50% !important; text-align: center !important; display: flex !important; flex-direction: column !important; align-items: center !important; }
-      .layout-split #formSide { width: 400px !important; flex-shrink: 0 !important; }
-      .layout-split #productImageWrapper { width: 100% !important; margin-top: 2rem !important; display: flex; justify-content: center !important; overflow: hidden; border-radius: 1.8rem; box-shadow: 0 30px 60px -10px rgba(0,0,0,0.4); }
-      .layout-split #productImage { max-height: 420px !important; width: 100% !important; object-fit: cover !important; transition: transform 0.6s ease; }
+      .layout-split #contentSide { width: 440px !important; text-align: center !important; display: flex !important; flex-direction: column !important; align-items: center !important; flex-shrink: 0 !important; }
+      .layout-split #formSide { width: 440px !important; flex-shrink: 0 !important; }
+      .layout-split #productImageWrapper { margin-top: 2rem !important; }
     }
 
     @media (max-width: 767px) {
-      #productImageWrapper { width: 100% !important; max-width: 440px; margin: 2rem auto !important; border-radius: 1.5rem !important; overflow: hidden; }
-      #productImage { width: 100%; height: auto; object-fit: cover; }
+      #productImageWrapper { margin: 2rem auto !important; }
       .glass { padding: 2.25rem 1.5rem !important; }
     }
 
@@ -87,7 +92,6 @@
 
   <div id="mainWrapper" class="layout-center animate-in">
     <div id="contentSide" class="z-20 px-4 md:px-0">
-      <!-- FIXED: Hapus Teks Identitas Bisnis -->
       <div id="logoWrapper" class="hidden mb-6 md:mb-10">
         <img id="dynamicLogo" src="" alt="" class="h-12 md:h-16 w-auto mx-auto object-contain">
       </div>
@@ -95,9 +99,8 @@
       <h1 id="dynamicAppName" class="font-black tracking-tighter mb-3 leading-tight"></h1>
       <p id="dynamicTagline" class="text-[15px] md:text-lg font-medium opacity-80 leading-relaxed mx-auto max-w-md md:max-w-xl mb-4 px-2"></p>
       
-      <!-- FIXED: Gambar Proposional (Tidak Raksasa) -->
       <div id="productImageWrapper" class="hidden transform transition-all duration-1000 scale-95 opacity-0">
-        <img id="productImage" src="" alt="" class="mx-auto">
+        <img id="productImage" src="" alt="">
       </div>
     </div>
 
@@ -147,7 +150,6 @@
   </footer>
 
   <script>
-    // URL Backend Google Apps Script Lu
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyxLmq_IeePVWIQn-ULt8pGZBj9cBEVZE1PGBzYfrzkgavgl01-a0iUUD-wZmJoJqZ51g/exec"; 
     
     const campaignId = new URLSearchParams(window.location.search).get('campaign') || "GENERAL";
